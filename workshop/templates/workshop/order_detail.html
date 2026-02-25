@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle OT - TallerApp{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Orden de Trabajo #{{ order.id }}</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        {% if order.invoice %}
+            <a href="{% url 'invoice_detail' order.invoice.id %}" class="btn btn-sm btn-success me-2">Ver Factura</a>
+        {% else %}
+            <a href="{% url 'generate_invoice' order.id %}" class="btn btn-sm btn-primary me-2">Generar Factura</a>
+        {% endif %}
+        <a href="{% url 'order_edit' order.id %}" class="btn btn-sm btn-outline-primary">Editar</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-white"><strong>Información del Vehículo</strong></div>
+            <div class="card-body">
+                <p><strong>Matrícula:</strong> {{ order.vehicle.plate }}</p>
+                <p><strong>Marca/Modelo:</strong> {{ order.vehicle.brand }} {{ order.vehicle.model }}</p>
+                <p><strong>Cliente:</strong> {{ order.vehicle.client }} ({{ order.vehicle.client.phone }})</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header bg-white"><strong>Estado de la Reparación</strong></div>
+            <div class="card-body">
+                <p><strong>Estado:</strong> 
+                    <span class="badge {% if order.status == 'PENDING' %}bg-warning{% elif order.status == 'IN_PROGRESS' %}bg-info{% else %}bg-success{% endif %}">
+                        {{ order.get_status_display }}
+                    </span>
+                </p>
+                <p><strong>Fecha de Entrada:</strong> {{ order.start_date|date:"d/m/Y" }}</p>
+                <p><strong>Kilometraje:</strong> {{ order.mileage }} km</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header bg-white"><strong>Trabajo Solicitado / Diagnóstico</strong></div>
+            <div class="card-body">
+                <p class="mb-0">{{ order.description }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12 text-end">
+        <h3>Total: {{ order.total_amount }}€</h3>
+    </div>
+</div>
+{% endblock %}

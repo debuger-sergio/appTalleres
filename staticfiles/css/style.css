@@ -1,0 +1,104 @@
+/* Estilos globales para TallerApp */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa;
+}
+
+/* Navegación */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    color: #0d6efd;
+}
+
+/* Barra lateral */
+.sidebar {
+    background-color: #ffffff;
+    min-height: calc(100vh - 56px);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.02);
+}
+
+.nav-link {
+    color: #495057;
+    font-weight: 500;
+    padding: 0.8rem 1.5rem;
+    transition: all 0.2s;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: #e9ecef;
+    color: #0d6efd;
+}
+
+/* Tarjetas y UI */
+.card {
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+}
+
+.btn-primary {
+    border-radius: 8px;
+    font-weight: 600;
+    padding: 10px 20px;
+}
+
+/* Impresión de Facturas */
+@media print {
+
+    .sidebar,
+    .navbar,
+    .btn-toolbar,
+    .btn,
+    .d-print-none {
+        display: none !important;
+    }
+
+    .main-content {
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .card {
+        box-shadow: none !important;
+        border: 1px solid #eee !important;
+    }
+}
+
+/* Utilidades de centrado */
+.text-center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling Django forms with Bootstrap classes */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+input[type="file"],
+select,
+textarea {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    appearance: none;
+    border-radius: 0.375rem;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}

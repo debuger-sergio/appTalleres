@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - TallerApp{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard: {{ workshop.name }}</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <h5 class="card-title">Clientes</h5>
+                <h2 class="display-4">{{ total_clients }}</h2>
+                <a href="{% url 'client_list' %}" class="text-white">Ver todos →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <h5 class="card-title">Vehículos</h5>
+                <h2 class="display-4">{{ total_vehicles }}</h2>
+                <a href="{% url 'vehicle_list' %}" class="text-white">Ver todos →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card bg-warning text-dark">
+            <div class="card-body">
+                <h5 class="card-title">OTs Pendientes</h5>
+                <h2 class="display-4">{{ pending_orders }}</h2>
+                <a href="{% url 'order_list' %}" class="text-dark">Gestionar →</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card bg-info text-dark">
+            <div class="card-body">
+                <h5 class="card-title">En Proceso</h5>
+                <h2 class="display-4">{{ in_progress_orders }}</h2>
+                <a href="{% url 'order_list' %}" class="text-dark">Ver estado →</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-4">
+    <h3>Órdenes Recientes</h3>
+    <div class="card">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Vehículo</th>
+                        <th>Estado</th>
+                        <th>Importe</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in recent_orders %}
+                    <tr>
+                        <td><a href="{% url 'order_detail' order.id %}">#{{ order.id }}</a></td>
+                        <td>{{ order.vehicle.plate }} - {{ order.vehicle.brand }}</td>
+                        <td>
+                            <span class="badge {% if order.status == 'PENDING' %}bg-warning{% elif order.status == 'IN_PROGRESS' %}bg-info{% else %}bg-success{% endif %}">
+                                {{ order.get_status_display }}
+                            </span>
+                        </td>
+                        <td>{{ order.total_amount }}€</td>
+                        <td>{{ order.created_at|date:"d/m/Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center py-4">No hay órdenes recientes.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}Presupuestos - TallerApp{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Presupuestos</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'budget_create' %}" class="btn btn-sm btn-primary">Nuevo Presupuesto</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Matrícula</th>
+                    <th>Estado</th>
+                    <th>Importe</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for budget in budgets %}
+                <tr>
+                    <td>#{{ budget.id }}</td>
+                    <td><strong>{{ budget.vehicle.plate }}</strong></td>
+                    <td>
+                        {% if budget.is_approved %}
+                        <span class="badge bg-success">Aprobado</span>
+                        {% else %}
+                        <span class="badge bg-secondary">Pendiente</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ budget.total_amount }}€</td>
+                    <td>
+                        <a href="{% url 'budget_edit' budget.id %}" class="btn btn-sm btn-outline-secondary">Editar</a>
+                        {% if not budget.is_approved %}
+                        <a href="{% url 'budget_approve' budget.id %}" class="btn btn-sm btn-outline-success">Aprobar</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center py-4">No se encontraron presupuestos.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

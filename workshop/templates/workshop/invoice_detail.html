@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}Factura {{ invoice.invoice_number }} - TallerApp{% endblock %}
+
+{% block extra_css %}
+{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom d-print-none">
+    <h1 class="h2">Factura: {{ invoice.invoice_number }}</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <button onclick="window.print()" class="btn btn-sm btn-outline-secondary me-2">Imprimir / PDF</button>
+    </div>
+</div>
+
+<div class="card p-5 main-content">
+    <div class="row mb-5">
+        <div class="col-6">
+            <h2 class="text-primary">{{ invoice.workshop.name }}</h2>
+            <p class="mb-0">{{ invoice.workshop.address }}</p>
+            <p class="mb-0">CIF: {{ invoice.workshop.tax_id }}</p>
+            <p class="mb-0">Tel: {{ invoice.workshop.phone }}</p>
+        </div>
+        <div class="col-6 text-end">
+            <h3>FACTURA</h3>
+            <p class="mb-0"><strong>Número:</strong> {{ invoice.invoice_number }}</p>
+            <p class="mb-0"><strong>Fecha:</strong> {{ invoice.created_at|date:"d/m/Y" }}</p>
+            <p class="mb-0"><strong>Estado:</strong> {{ invoice.is_paid|yesno:"PAGADA,PENDIENTE" }}</p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-12">
+            <h5>Cliente:</h5>
+            <p class="mb-0"><strong>{{ invoice.order.vehicle.client.first_name }} {{ invoice.order.vehicle.client.last_name }}</strong></p>
+            <p class="mb-0">DNI/NIE: {{ invoice.order.vehicle.client.dni }}</p>
+            <p class="mb-0">{{ invoice.order.vehicle.client.address }}</p>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <h5>Detalles del Vehículo:</h5>
+            <p class="mb-0"><strong>Matrícula:</strong> {{ invoice.order.vehicle.plate }} - {{ invoice.order.vehicle.brand }} {{ invoice.order.vehicle.model }}</p>
+            <p class="mb-0"><strong>Kms:</strong> {{ invoice.order.mileage }} km</p>
+        </div>
+    </div>
+
+    <table class="table table-bordered mb-5">
+        <thead class="table-light">
+            <tr>
+                <th>Descripción del Trabajo</th>
+                <th class="text-end" style="width: 150px;">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ invoice.order.description }}</td>
+                <td class="text-end">{{ invoice.total_amount }}€</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <th class="text-end">BASE IMPONIBLE:</th>
+                <td class="text-end">{{ invoice.total_amount }}€</td>
+            </tr>
+            <tr>
+                <th class="text-end">IVA (0%):</th>
+                <td class="text-end">0.00€</td>
+            </tr>
+            <tr class="table-primary">
+                <th class="text-end">TOTAL FACTURA:</th>
+                <td class="text-end"><strong>{{ invoice.total_amount }}€</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <div class="row mt-5 pt-5 border-top">
+        <div class="col-12 text-center text-muted">
+            <small>Gracias por su confianza en {{ invoice.workshop.name }}</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

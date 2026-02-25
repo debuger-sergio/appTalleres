@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Órdenes de Trabajo - TallerApp{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Órdenes de Trabajo</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'order_create' %}" class="btn btn-sm btn-primary">Nueva OT</a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-hover mb-0">
+            <thead class="table-light">
+                <tr>
+                    <th>ID</th>
+                    <th>Matrícula</th>
+                    <th>Estado</th>
+                    <th>Entrada</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>#{{ order.id }}</td>
+                    <td><strong>{{ order.vehicle.plate }}</strong></td>
+                    <td>
+                        <span class="badge {% if order.status == 'PENDING' %}bg-warning{% elif order.status == 'IN_PROGRESS' %}bg-info{% elif order.status == 'FINISHED' %}bg-primary{% else %}bg-success{% endif %}">
+                            {{ order.get_status_display }}
+                        </span>
+                    </td>
+                    <td>{{ order.start_date|date:"d/m/Y" }}</td>
+                    <td>{{ order.total_amount }}€</td>
+                    <td>
+                        <a href="{% url 'order_detail' order.id %}" class="btn btn-sm btn-outline-secondary">Detalles</a>
+                        <a href="{% url 'order_edit' order.id %}" class="btn btn-sm btn-outline-primary">Editar/Estado</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center py-4">No se encontraron órdenes de trabajo.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

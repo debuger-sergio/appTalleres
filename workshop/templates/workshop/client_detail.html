@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Detalle Cliente - TallerApp{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Ficha de Cliente: {{ client }}</h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{% url 'client_edit' client.id %}" class="btn btn-sm btn-outline-primary">Editar Datos</a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header bg-white"><strong>Datos de Contacto</strong></div>
+            <div class="card-body">
+                <p><strong>Teléfono:</strong> {{ client.phone }}</p>
+                <p><strong>Email:</strong> {{ client.email|default:"No disponible" }}</p>
+                <p><strong>DNI:</strong> {{ client.dni|default:"No disponible" }}</p>
+                <p><strong>Dirección:</strong> {{ client.address|default:"No disponible" }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="card mb-4">
+            <div class="card-header bg-white d-flex justify-content-between">
+                <strong>Vehículos Registrados</strong>
+                <a href="{% url 'vehicle_create' %}?client={{ client.id }}" class="btn btn-sm btn-primary">Añadir Vehículo</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Matrícula</th>
+                            <th>Modelo</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for vehicle in client.vehicles.all %}
+                        <tr>
+                            <td>{{ vehicle.plate }}</td>
+                            <td>{{ vehicle.brand }} {{ vehicle.model }}</td>
+                            <td><a href="{% url 'vehicle_detail' vehicle.id %}" class="btn btn-sm btn-outline-info">Ver Historial</a></td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="3" class="text-center">No hay vehículos.</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
