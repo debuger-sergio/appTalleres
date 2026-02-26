@@ -1,82 +1,68 @@
-# TallerApp 🛠️
+# Sistema de Gestión de Talleres - Sevilla Motor 🛠️
 
-TallerApp es una aplicación web integral diseñada para la gestión de talleres mecánicos. Permite administrar clientes, vehículos, órdenes de trabajo, presupuestos y facturación de manera eficiente y profesional.
-
-## ✨ Características Principales
-
-- **Dashboard Inteligente:** Visualización rápida de métricas (clientes, vehículos, órdenes pendientes).
-- **Gestión de Clientes:** Base de datos completa de clientes con historial vinculado.
-- **Control de Vehículos:** Validación de años de fabricación y normalización automática de matrículas a mayúsculas.
-- **Órdenes de Trabajo (OT):** Seguimiento detallado del estado de las reparaciones (Pendiente, En Proceso, Terminado, Entregado).
-- **Sistema de Presupuestos:** Creación de presupuestos y conversión automática a Órdenes de Trabajo tras aprobación.
-- **Facturación Automática:** Generación de facturas profesionales listas para imprimir o guardar como PDF.
-- **Multi-taller:** Arquitectura diseñada para que cada usuario gestione su propio taller de forma independiente.
-- **Integración Continua:** Configuración de GitHub Actions para asegurar la calidad mediante tests automáticos.
-
-## 🚀 Tecnologías Utilizadas
-
-- **Backend:** Django (Python)
-- **Frontend:** HTML5, CSS3 (Vanilla), Bootstrap 5
-- **Base de Datos:** SQLite (desarrollo)
-- **Gestión de Estáticos:** WhiteNoise
-- **CI/CD:** GitHub Actions
-
-## 📦 Instalación y Configuración
-
-Siga estos pasos para ejecutar el proyecto en su entorno local:
-
-1. **Clonar el repositorio:**
-   ```bash
-   git clone https://github.com/debuger-sergio/appTalleres.git
-   cd AppTallerMecanico
-   ```
-
-2. **Crear y activar un entorno virtual:**
-   ```bash
-   python -m venv .venv
-   # En Windows:
-   .\.venv\Scripts\activate
-   # En Linux/Mac:
-   source .venv/bin/activate
-   ```
-
-3. **Instalar dependencias:**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Realizar migraciones:**
-   ```bash
-   python manage.py migrate
-   ```
-
-5. **Crear un superusuario:**
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-6. **(Opcional) Cargar datos de prueba:**
-   ```bash
-   python manage.py populate_data
-   ```
-
-7. **Iniciar el servidor:**
-   ```bash
-   python manage.py runserver
-   ```
-
-La aplicación estará disponible en `http://127.0.0.1:8000/`.
-
-## 🧪 Pruebas
-
-Para ejecutar la suite de tests automáticos:
-```bash
-python manage.py test
-```
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT.
+Este documento constituye el manual oficial de operación y guía técnica para la plataforma de gestión de **Talleres Sevilla Motor**.
 
 ---
-Desarrollado con ❤️ para la gestión profesional de talleres.
+
+## 👥 Guía para el Personal del Taller (Trabajadores)
+
+Esta sección explica cómo utilizar la herramienta en el día a día para gestionar las reparaciones y los clientes.
+
+### 1. Acceso al Sistema
+Para abrir la aplicación, asegúrese de que el servidor esté encendido y acceda desde el navegador a la siguiente dirección:
+👉 **[http://127.0.0.1:8000](http://127.0.0.1:8000)**
+
+### 2. Flujo de Trabajo Diario
+
+#### A. Recepción del Vehículo
+1.  Vaya a la sección **Clientes** y verifique si el cliente ya existe. Si no, créelo.
+2.  Vaya a **Vehículos** y registre el coche del cliente (la matrícula se guardará automáticamente en mayúsculas).
+3.  Cree una **Nueva Orden de Trabajo (OT)** detallando el problema y el kilometraje actual.
+
+#### B. Durante la Reparación
+1.  Actualice el **Estado** de la orden (de *Pendiente* a *En Proceso*) para que el resto del equipo sepa en qué se está trabajando.
+2.  Una vez finalizado el trabajo, marque la orden como **Terminada**.
+
+#### C. Entrega y Facturación
+1.  Desde la ficha de la Orden de Trabajo, pulse el botón **"Generar Factura"**.
+2.  El sistema asignará automáticamente un número de factura legal.
+3.  Pulse **"Imprimir / PDF"** para entregar el documento al cliente.
+4.  Marque la orden como **Entregada**.
+
+---
+
+## 🛠️ Guía para Administradores (Instalación Técnica)
+
+Manual para la puesta en marcha inicial del servidor.
+
+### Requisitos Previos
+- Python 3.10 o superior instalado.
+- Dependencias listadas en `requirements.txt`.
+
+### Pasos de Ejecución
+1.  **Activar el entorno:** 
+    ```powershell
+    .\.venv\Scripts\activate
+    ```
+2.  **Iniciar el servicio:**
+    ```powershell
+    python manage.py runserver
+    ```
+3.  **Mantenimiento de datos:**
+    - Para actualizar la base de datos: `python manage.py migrate`
+    - Para generar datos de ejemplo: `python manage.py populate_data`
+
+---
+
+## 📈 Dashboard y Métricas
+El panel principal muestra en tiempo real:
+- Total de clientes atendidos.
+- Vehículos registrados.
+- Resumen de órdenes pendientes para organizar la jornada laboral.
+
+## 📄 Normativa de Seguridad
+- El acceso está protegido por contraseña. Cierre sesión al finalizar su turno.
+- No modifique facturas ya emitidas sin autorización de administración.
+
+---
+**Talleres Sevilla Motor** - *Eficiencia y Profesionalidad en cada reparación.*
